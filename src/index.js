@@ -29,6 +29,8 @@ function createStore(reducer) {
   return new Store(reducer)
 }
 
+
+// test
 const testStore = createStore((state = 'default', action) => {
   switch(action.type) {
     case 'TEST':
@@ -37,11 +39,17 @@ const testStore = createStore((state = 'default', action) => {
       return state;
   }
 });
-testStore.subscribe(() => {
-  alert(testStore.getState())
+const dispatchLog = () => {
+  console.log
+}
+testStore.dispatch({
+  type: 'TEST'
 })
-setTimeout(() => {
-  testStore.dispatch({
-    type: 'TEST'
-  })
-}, 1000)
+// testStore.subscribe(() => {
+//   alert(testStore.getState())
+// })
+// setTimeout(() => {
+//   testStore.dispatch({
+//     type: 'TEST'
+//   })
+// }, 1000)
