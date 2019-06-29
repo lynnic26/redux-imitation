@@ -1,9 +1,31 @@
-import "./styles.css";
 
-document.getElementById("app").innerHTML = `
-<h1>Hello Vanilla!</h1>
-<div>
-  We use Parcel to bundle this sandbox, you can find more info about Parcel
-  <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
-</div>
-`;
+
+class Store  {
+  constructor(reducer) {
+    this.state = null
+    this.listener = []
+    this.reducer = reducer
+  }
+  getState() {
+    return this.state
+  }
+  subscribe(fn) {
+    this.listener.push(fn)
+    return () => {
+      this.listener.length = 0
+    }
+  }
+  dispatch(action) {
+    // 更新state
+    this.reducer(this.state, action)
+    // 触发订阅函数
+    for(const fn of this.listener) {
+      fn()
+    }
+  }
+}
+
+function createStore(reducer) {
+  return new Store(reducer)
+}
+
